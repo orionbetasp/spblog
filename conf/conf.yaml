@@ -1,0 +1,22 @@
+signup_enabled: true
+session_secret: spblog
+domain:
+public: static
+addr: :80
+backup_key:
+dsn: spblog.db?_loc=Asia/Shanghai
+#dsn: root:mysql@/wblog?charset=utf8&parseTime=True&loc=Asia/Shanghai
+notify_emails:
+page_size: 7
+github:
+  github_clientid: 99b6638830d628742a44
+  github_clientsecret: 72bee39f149084c51309a000558b80173fa0cc9e
+  github_authurl: https://github.com/login/oauth/authorize?client_id=%s&scope=user:email&state=%s
+  # 与github配置的回调地址一致
+  github_redirecturl: http://127.0.0.1:8090/oauth2callback
+  github_tokenurl: https://github.com/login/oauth/access_token
+  github_scope:
+smtp:
+  smtp_username:
+  smtp_password:
+  smtp_host:

@@ -1,0 +1,119 @@
+{{define "navigation.html"}}
+<style>
+    .navbar{
+        background: #F0F8FF;
+    }
+    .navbar-nav>li>a{
+        color: #FFB6C1;
+    }
+    .icon {
+             width: 1.7em;
+             height: 1.7em;
+             vertical-align: -0.15em;
+             fill: currentColor;
+             overflow: hidden;
+     }
+    .icon1 {
+             width: 1.5em;
+             height: 1.5em;
+             vertical-align: -0.15em;
+             fill: currentColor;
+             overflow: hidden;
+     }
+</style>
+<script src="/static/js/iconfont.js"></script>
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Spblog</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/index">博文</a>
+                </li>
+                <li>
+                    <a href="/admin/index">管理</a>
+                </li>
+                <li>
+                    <a href="/subscribe">订阅</a>
+                </li>
+                <li>
+                    <a href="/rss" target="_blank">RSS</a>
+                </li>
+                <li>
+                    <a href="/">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-panda"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-Artboard"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-keji-"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-gougou"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-icon-"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon--xiaozhu"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-mao"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-mao1"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jiqimao"></use>
+                        </svg>
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon--xiaomao"></use>
+                        </svg>
+                        给您拜年了
+                    </a>
+
+                </li>
+            </ul>
+
+            <ul class="pull-right nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    {{if .user}}
+                    <li><a href="/logout">
+                            <svg class="icon1" aria-hidden="true">
+                                <use xlink:href="#icon-exit-logon"></use>
+                            </svg>{{.user.NickName}}-退出登录</a></li>
+                    {{else}}
+                    <li><a href="/signin">
+                            <svg class="icon1" aria-hidden="true">
+                                <use xlink:href="#icon-zhucedenglu"></use>
+                            </svg>登录</a></li>
+                    <li><a href="/auth/github">
+                            <svg class="icon1" aria-hidden="true">
+                                <use xlink:href="#icon-github"></use>
+                            </svg>Github账号登录</a></li>
+                    {{end}}
+                </ul>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+
+        <div class="pull-right">
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+</nav>
+{{end}}
