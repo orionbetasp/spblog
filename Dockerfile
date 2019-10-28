@@ -10,7 +10,8 @@ WORKDIR /spblog
 COPY . /spblog/
 RUN go mod download
 RUN go build -o spblog main.go
+RUN chmod 777 /spblog/spblog
 
 EXPOSE 80
 
-ENTRYPOINT ["sudo ./spblog"]
+ENTRYPOINT ["./spblog"]

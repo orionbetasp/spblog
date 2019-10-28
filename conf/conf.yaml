@@ -13,7 +13,7 @@ github:
   github_clientsecret: 72bee39f149084c51309a000558b80173fa0cc9e
   github_authurl: https://github.com/login/oauth/authorize?client_id=%s&scope=user:email&state=%s
   # 与github配置的回调地址一致
-  github_redirecturl: http://127.0.0.1:8090/oauth2callback
+  github_redirecturl: https://febaug.cn/oauth2callback
   github_tokenurl: https://github.com/login/oauth/access_token
   github_scope:
 smtp:
