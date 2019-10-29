@@ -553,11 +553,16 @@ func GetLinkById(id uint) (*Link, error) {
 }*/
 
 func (wa *WxAppData) Insert() error {
-	return DB.FirstOrCreate(wa, "name = ?", wa.Name).Error
+	var waRes WxAppData
+	DB.Where(&WxAppData{Name: wa.Name}).First(&waRes)
+	if waRes.Name == "" {
+		return DB.FirstOrCreate(&wa, "name = ?", wa.Name).Error
+	}
+	return DB.Model(&wa).Where("name = ?", wa.Name).Update("data", wa.Data).Error
 }
 
 func GetWxAppDataByName(name string) (*WxAppData, error) {
 	var wa WxAppData
-	err := DB.FirstOrCreate(&wa, "name = ?", name).Error
+	err := DB.First(&wa, "name = ?", name).Error
 	return &wa, err
 }
