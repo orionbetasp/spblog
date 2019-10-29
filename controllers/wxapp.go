@@ -2,39 +2,34 @@ package controllers
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"spblog/models"
+	"spblog/util"
 
 	"github.com/gin-gonic/gin"
 	//"github.com/tidwall/gjson"
 )
 
 func WxAppUpData(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-	//name := gjson.Get(string(body), "name").String()
-	//data := gjson.Get(string(body), "list").String()
 	var wa models.WxAppData
-	err := json.Unmarshal(body, &wa)
-	if err != nil || wa.Name == "" {
-		c.String(200, "就出问题了呗！")
+	wa.Name = c.Query("name")
+	wa.Data = c.Query("list")
+	if wa.Name == "" {
+		c.String(200, "不科学，没名字！")
 		return
 	}
-	err = wa.Insert()
+	err := wa.Insert()
 	if err != nil {
-		c.String(200, "就出问题了呗！")
+		c.String(200, "就出问题了呗！"+err.Error())
 		return
 	}
 	c.String(200, wa.Name+"の数据已同步!")
 }
 
 func WxAppDownData(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-	//name := gjson.Get(string(body), "name").String()
-	//data := gjson.Get(string(body), "list").String()
 	var wa models.WxAppData
-	err := json.Unmarshal(body, &wa)
-	if err != nil || wa.Name == "" {
-		c.String(200, "就出问题了呗！")
+	wa.Name = c.Query("name")
+	if wa.Name == "" {
+		c.String(200, "不科学，没名字！")
 		return
 	}
 	waRes, err := models.GetWxAppDataByName(wa.Name)
@@ -51,5 +46,6 @@ func WxAppDownData(c *gin.Context) {
 		c.String(200, "就出问题了呗！")
 		return
 	}
+	util.Logger.Info("下载数据：" + string(j))
 	c.String(200, string(j))
 }
