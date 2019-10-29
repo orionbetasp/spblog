@@ -12,11 +12,11 @@ import (
 
 func WxAppUpData(c *gin.Context) {
 	var wa models.WxAppData
-	n, _ := base64.URLEncoding.DecodeString(c.Query("name"))
-	d, _ := base64.URLEncoding.DecodeString(c.Query("list"))
-	wa.Name = string(n)
-	wa.Data = string(d)
-	util.Logger.Info(string(n) + " 上传数据：" + string(d))
+	wa.Name = c.Query("name")
+	d := c.Query("list")
+	wa.Data = base64.StdEncoding.EncodeToString([]byte(d))
+
+	util.Logger.Info(wa.Name + " 上传数据：" + d)
 	if wa.Name == "" {
 		c.String(200, "不科学，没名字！")
 		return
@@ -30,13 +30,13 @@ func WxAppUpData(c *gin.Context) {
 }
 
 func WxAppDownData(c *gin.Context) {
-	n, _ := base64.URLEncoding.DecodeString(c.Query("name"))
-	util.Logger.Info(string(n) + " 下载数据：")
-	if string(n) == "" {
+	n := c.Query("name")
+	util.Logger.Info(n + " 下载数据：")
+	if n == "" {
 		c.String(200, "不科学，没名字！")
 		return
 	}
-	waRes, err := models.GetWxAppDataByName(string(n))
+	waRes, err := models.GetWxAppDataByName(n)
 	if err != nil {
 		c.String(200, "就出问题了呗！")
 		return
@@ -45,6 +45,8 @@ func WxAppDownData(c *gin.Context) {
 		c.String(200, "你之前有没有上传数据，心里没点B数嘛！")
 		return
 	}
+	d, _ := base64.StdEncoding.DecodeString(waRes.Data)
+	waRes.Data = string(d)
 	j, err := json.Marshal(waRes)
 	if err != nil {
 		c.String(200, "就出问题了呗！"+err.Error())
