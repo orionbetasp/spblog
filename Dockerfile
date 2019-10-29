@@ -12,6 +12,6 @@ RUN go mod download
 RUN go build -o spblog main.go
 RUN chmod 777 /spblog/spblog
 
-EXPOSE 80
+EXPOSE 8090
 
 ENTRYPOINT ["./spblog"]
