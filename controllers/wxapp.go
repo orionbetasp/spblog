@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"spblog/models"
 	"spblog/util"
@@ -11,8 +12,11 @@ import (
 
 func WxAppUpData(c *gin.Context) {
 	var wa models.WxAppData
-	wa.Name = c.Query("name")
-	wa.Data = c.Query("list")
+	n, _ := base64.URLEncoding.DecodeString(c.Query("name"))
+	d, _ := base64.URLEncoding.DecodeString(c.Query("list"))
+	wa.Name = string(n)
+	wa.Data = string(d)
+	util.Logger.Info(string(n) + " 上传数据：" + string(d))
 	if wa.Name == "" {
 		c.String(200, "不科学，没名字！")
 		return
@@ -26,13 +30,13 @@ func WxAppUpData(c *gin.Context) {
 }
 
 func WxAppDownData(c *gin.Context) {
-	var wa models.WxAppData
-	wa.Name = c.Query("name")
-	if wa.Name == "" {
+	n, _ := base64.URLEncoding.DecodeString(c.Query("name"))
+	util.Logger.Info(string(n) + " 下载数据：")
+	if string(n) == "" {
 		c.String(200, "不科学，没名字！")
 		return
 	}
-	waRes, err := models.GetWxAppDataByName(wa.Name)
+	waRes, err := models.GetWxAppDataByName(string(n))
 	if err != nil {
 		c.String(200, "就出问题了呗！")
 		return
@@ -42,8 +46,8 @@ func WxAppDownData(c *gin.Context) {
 		return
 	}
 	j, err := json.Marshal(waRes)
-	if err != nil || wa.Name == "" {
-		c.String(200, "就出问题了呗！")
+	if err != nil {
+		c.String(200, "就出问题了呗！"+err.Error())
 		return
 	}
 	util.Logger.Info("下载数据：" + string(j))
