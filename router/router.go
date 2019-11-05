@@ -10,11 +10,9 @@ import (
 	"spblog/util"
 	"strings"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
-
-	"github.com/claudiu/gocron"
-	"github.com/gin-gonic/gin"
 )
 
 //SetupRouter 设置路由
@@ -28,10 +26,6 @@ func SetupRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	r.Use(SharedData())
 	r.Use(signAuthMiddleware())
-
-	//Periodic tasks
-	gocron.Every(1).Day().Do(controllers.CreateXMLSitemap)
-	gocron.Start()
 
 	r.Static("/static", filepath.Join(getCurrentDirectory(), "./static"))
 	r.StaticFile("/favicon.ico", filepath.Join(getCurrentDirectory(), "./static/favicon.ico"))
