@@ -23,3 +23,9 @@ log
 /vendor/*
 !/vendor/vendor.json
 dockerfile
+
+
+
+*.js linguist-language=golang
+*.css linguist-language=golang
+*.html linguist-language=golang
