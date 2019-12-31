@@ -12,6 +12,8 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/gorilla/feeds v1.1.1
 	github.com/jinzhu/gorm v1.9.11
+	github.com/lestrrat-go/file-rotatelogs v2.2.0+incompatible // indirect
+	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lib/pq v1.2.0 // indirect
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
