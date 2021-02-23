@@ -1,17 +1,17 @@
-FROM golang:latest
-
+FROM golang:latest AS builder
 ENV GOPROXY=https://goproxy.cn
 ENV GO111MODULE=on
-
-MAINTAINER Razil "shenpu1819@163.com"
-
 WORKDIR /spblog
-
 COPY . /spblog/
-RUN go mod download
-RUN go build -o spblog main.go
-RUN chmod 777 /spblog/spblog
+RUN go mod download \
+&& CGO_ENABLED=0 GOOS=linux go build -o spblog .
 
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /spblog/spblog .
+COPY ./conf/conf.yaml ./conf/conf.yaml
+COPY ./static ./static
+COPY ./views ./views
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 EXPOSE 8090
-
-ENTRYPOINT ["./spblog"]
+CMD ["./spblog"]
