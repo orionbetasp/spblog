@@ -1,6 +1,6 @@
 module spblog
 
-go 1.13
+go 1.16
 
 require (
 	github.com/alimoeeny/gooauth2 v0.0.0-20140214171402-62c620a8c7eb
